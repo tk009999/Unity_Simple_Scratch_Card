@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Scracth Card</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.javascript"></script>
+    <script src="TemplateData/InitializationCallbackFunction.javascript"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+        // var gameInstance = UnityLoader.instantiate("gameContainer", "Build/ScratchCard.json", {
+        //     onProgress: function Test(gameInstance, progress) {
+        //         UnityProgress(gameInstance, progress, function () {
+        //             gameInstance.SendMessage("WebDataReceiver", "Receive", "TEST123");
+        //         })
+        //     }
+        // });
+        //gameInstance.SendMessage("WebDataReceiver", "Receive", "TEST123");
+        UnityLoader.instantiate("gameContainer", "Build/ScratchCard.json", {
+            compatibilityCheck: function (unityInstance, onsuccess, onerror) {
+                if (!UnityLoader.SystemInfo.hasWebGL) {
+                    unityInstance.popup("Your browser does not support WebGL",
+                        [{ text: "OK", callback: onerror }]);
+                } else if (UnityLoader.SystemInfo.mobile) {
+                    unityInstance.popup("Please note that Unity WebGL is not currently supported on mobiles. Press OK if you wish to continue anyway.",
+                        [{ text: "OK", callback: onsuccess }]);
+                } else if (["Edge", "Firefox", "Chrome", "Safari"].indexOf(UnityLoader.SystemInfo.browser) == -1) {
+                    unityInstance.popup("Please note that your browser is not currently supported for this Unity WebGL content. Press OK if you wish to continue anyway.",
+                        [{ text: "OK", callback: onsuccess }]);
+                } else {
+                    onsuccess();
+                }
+            },
+            onProgress: function Test(gameInstance, progress) {
+                UnityProgress(gameInstance, progress, function () {
+                    gameInstance.SendMessage("WebDataReceiver", "Receive", "TEST123");
+                })
+            },
+            Module: {
+                onRuntimeInitialized: InitializationCallbackFunction,
+            },
+        });
+    </script>
+</head>
+
+<body>
+    <div class="webgl-content">
+        <div id="gameContainer" style="width: 1920px; height: 1080px"></div>
+    </div>
+    <div class="simmer">template by: <a href="https://simmer.io" target="_blank">SIMMER.io</a></div>
+    <script src="TemplateData/responsive.javascript"></script>
+</body>
+
+</html>
